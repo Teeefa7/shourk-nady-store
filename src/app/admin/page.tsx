@@ -371,30 +371,32 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
 
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Order Number</th>
-                    <th>Customer</th>
-                    <th>Emirate</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.slice(0, 5).map((ord, idx) => (
-                    <tr key={ord.id || idx}>
-                      <td><strong>#{ord.orderNumber || ord.id}</strong></td>
-                      <td>{ord.guestCustomer?.fullName || ord.customer || 'Guest Customer'}</td>
-                      <td>{ord.emirate || 'Dubai'}</td>
-                      <td>{formatCurrency(ord.total || ord.price || 1850, locale)}</td>
-                      <td>
-                        <span style={{ color: '#d4af37', fontWeight: 600 }}>{ord.status || 'Confirmed'}</span>
-                      </td>
+              <div className={styles.tableContainer}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Order Number</th>
+                      <th>Customer</th>
+                      <th>Emirate</th>
+                      <th>Total</th>
+                      <th>Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {orders.slice(0, 5).map((ord, idx) => (
+                      <tr key={ord.id || idx}>
+                        <td><strong>#{ord.orderNumber || ord.id}</strong></td>
+                        <td>{ord.guestCustomer?.fullName || ord.customer || 'Guest Customer'}</td>
+                        <td>{ord.emirate || 'Dubai'}</td>
+                        <td>{formatCurrency(ord.total || ord.price || 1850, locale)}</td>
+                        <td>
+                          <span style={{ color: '#d4af37', fontWeight: 600 }}>{ord.status || 'Confirmed'}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </>
         )}
@@ -409,50 +411,52 @@ export default function AdminDashboardPage() {
               </button>
             </div>
 
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>SKU</th>
-                  <th>Abaya Title</th>
-                  <th>Price</th>
-                  <th>Stock</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productsList.map((prod) => (
-                  <tr key={prod.id}>
-                    <td>
-                      <Image
-                        src={prod.images[0]?.url || 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=200'}
-                        alt={prod.name}
-                        width={44}
-                        height={54}
-                        style={{ objectFit: 'cover', borderRadius: '4px' }}
-                      />
-                    </td>
-                    <td><code>{prod.variants[0]?.sku || 'SN-ABY'}</code></td>
-                    <td>
-                      <div style={{ fontWeight: 600, color: '#fff' }}>{locale === 'ar' ? prod.nameAr : prod.name}</div>
-                      <div style={{ fontSize: '11px', color: '#a09587' }}>{prod.categories[0]?.name}</div>
-                    </td>
-                    <td>{formatCurrency(prod.price, locale)}</td>
-                    <td>{prod.variants.reduce((acc, v) => acc + v.stock, 0)} units</td>
-                    <td>
-                      <div style={{ display: 'flex', gap: '8px' }}>
-                        <button onClick={() => handleOpenEditModal(prod)} className={styles.editBtn}>
-                          ✏️ Edit
-                        </button>
-                        <button onClick={() => handleDeleteProduct(prod.id)} className={styles.deleteBtn}>
-                          🗑️ Delete
-                        </button>
-                      </div>
-                    </td>
+            <div className={styles.tableContainer}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>SKU</th>
+                    <th>Abaya Title</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {productsList.map((prod) => (
+                    <tr key={prod.id}>
+                      <td>
+                        <Image
+                          src={prod.images[0]?.url || 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=200'}
+                          alt={prod.name}
+                          width={44}
+                          height={54}
+                          style={{ objectFit: 'cover', borderRadius: '4px' }}
+                        />
+                      </td>
+                      <td><code>{prod.variants[0]?.sku || 'SN-ABY'}</code></td>
+                      <td>
+                        <div style={{ fontWeight: 600, color: '#fff' }}>{locale === 'ar' ? prod.nameAr : prod.name}</div>
+                        <div style={{ fontSize: '11px', color: '#a09587' }}>{prod.categories[0]?.name}</div>
+                      </td>
+                      <td>{formatCurrency(prod.price, locale)}</td>
+                      <td>{prod.variants.reduce((acc, v) => acc + v.stock, 0)} units</td>
+                      <td>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button onClick={() => handleOpenEditModal(prod)} className={styles.editBtn}>
+                            ✏️ Edit
+                          </button>
+                          <button onClick={() => handleDeleteProduct(prod.id)} className={styles.deleteBtn}>
+                            🗑️ Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
@@ -463,41 +467,43 @@ export default function AdminDashboardPage() {
               <h3 className={styles.blockTitle}>All Customer Orders & Status Updates</h3>
             </div>
 
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Customer Name</th>
-                  <th>Emirate</th>
-                  <th>Total</th>
-                  <th>Payment</th>
-                  <th>Delivery Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((ord, idx) => (
-                  <tr key={ord.id || idx}>
-                    <td><strong>#{ord.orderNumber || ord.id || 'SN-100'}</strong></td>
-                    <td>{ord.guestCustomer?.fullName || ord.customer || 'Guest Customer'}</td>
-                    <td>{ord.emirate || 'Dubai'}</td>
-                    <td>{formatCurrency(ord.total || 1850, locale)}</td>
-                    <td>{ord.paymentMethod === 'card' ? 'Credit Card (Paid)' : ord.payment || 'COD'}</td>
-                    <td>
-                      <select
-                        value={ord.status || 'confirmed'}
-                        onChange={(e) => handleStatusChange(ord.id, e.target.value)}
-                        className={styles.statusSelect}
-                      >
-                        <option value="confirmed">Confirmed</option>
-                        <option value="processing">Processing</option>
-                        <option value="out_for_delivery">Out for Delivery</option>
-                        <option value="delivered">Delivered</option>
-                      </select>
-                    </td>
+            <div className={styles.tableContainer}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Emirate</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Delivery Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {orders.map((ord, idx) => (
+                    <tr key={ord.id || idx}>
+                      <td><strong>#{ord.orderNumber || ord.id || 'SN-100'}</strong></td>
+                      <td>{ord.guestCustomer?.fullName || ord.customer || 'Guest Customer'}</td>
+                      <td>{ord.emirate || 'Dubai'}</td>
+                      <td>{formatCurrency(ord.total || 1850, locale)}</td>
+                      <td>{ord.paymentMethod === 'card' ? 'Credit Card (Paid)' : ord.payment || 'COD'}</td>
+                      <td>
+                        <select
+                          value={ord.status || 'confirmed'}
+                          onChange={(e) => handleStatusChange(ord.id, e.target.value)}
+                          className={styles.statusSelect}
+                        >
+                          <option value="confirmed">Confirmed</option>
+                          <option value="processing">Processing</option>
+                          <option value="out_for_delivery">Out for Delivery</option>
+                          <option value="delivered">Delivered</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 

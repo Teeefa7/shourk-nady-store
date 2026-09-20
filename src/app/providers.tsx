@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { CartProvider } from '@/context/CartContext';
 import { WishlistProvider } from '@/context/WishlistContext';
@@ -11,6 +12,9 @@ import { CartDrawer } from '@/components/cart/CartDrawer';
 import { SearchOverlay } from '@/components/layout/SearchOverlay';
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith('/admin');
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -18,21 +22,29 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <LanguageProvider>
       <CartProvider>
         <WishlistProvider>
-          <Header
-            onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
-            onOpenSearch={() => setIsSearchOpen(true)}
-          />
-          <main style={{ minHeight: '80vh' }}>{children}</main>
-          <Footer />
-          <MobileMenu
-            isOpen={isMobileMenuOpen}
-            onClose={() => setIsMobileMenuOpen(false)}
-          />
-          <CartDrawer />
-          <SearchOverlay
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-          />
+          {!isAdminRoute && (
+            <Header
+              onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
+              onOpenSearch={() => setIsSearchOpen(true)}
+            />
+          )}
+
+          <main style={{ minHeight: isAdminRoute ? '100vh' : '80vh' }}>{children}</main>
+
+          {!isAdminRoute && <Footer />}
+          {!isAdminRoute && (
+            <MobileMenu
+              isOpen={isMobileMenuOpen}
+              onClose={() => setIsMobileMenuOpen(false)}
+            />
+          )}
+          {!isAdminRoute && <CartDrawer />}
+          {!isAdminRoute && (
+            <SearchOverlay
+              isOpen={isSearchOpen}
+              onClose={() => setIsSearchOpen(false)}
+            />
+          )}
         </WishlistProvider>
       </CartProvider>
     </LanguageProvider>
