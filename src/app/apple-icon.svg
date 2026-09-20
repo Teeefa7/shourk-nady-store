@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <rect width="180" height="180" rx="40" fill="#0A0A0A"/>
+  <rect x="12" y="12" width="156" height="156" rx="30" fill="none" stroke="#C9A96E" stroke-width="3" opacity="0.8"/>
+  <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#C9A96E" font-family="'Cormorant Garamond', 'Georgia', serif" font-weight="700" font-size="80" letter-spacing="4">SN</text>
+</svg>

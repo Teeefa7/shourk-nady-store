@@ -1,0 +1,304 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// SHOURK NADY — Database Schema
+// Premium Gulf Fashion E-Commerce
+// ============================================================
+
+model Category {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  nameAr        String
+  description   String?
+  descriptionAr String?
+  image         String?
+  position      Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  products ProductCategory[]
+}
+
+model Collection {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  nameAr        String
+  description   String?
+  descriptionAr String?
+  image         String?
+  isActive      Boolean  @default(true)
+  position      Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  products ProductCollection[]
+}
+
+model Color {
+  id      String @id @default(cuid())
+  name    String
+  nameAr  String
+  hexCode String
+
+  products ProductColor[]
+}
+
+model Size {
+  id       String @id @default(cuid())
+  name     String
+  position Int    @default(0)
+
+  products ProductSize[]
+  variants ProductVariant[]
+}
+
+model Product {
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  name               String
+  nameAr             String
+  description        String
+  descriptionAr      String
+  shortDescription   String
+  shortDescriptionAr String
+  price              Float
+  compareAtPrice     Float?
+  material           String?
+  materialAr         String?
+  careInstructions   String?
+  careInstructionsAr String?
+  averageRating      Float    @default(0)
+  reviewCount        Int      @default(0)
+  isFeatured         Boolean  @default(false)
+  isNewArrival       Boolean  @default(false)
+  isBestSeller       Boolean  @default(false)
+  status             String   @default("active") // active | draft | archived
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  images      ProductImage[]
+  variants    ProductVariant[]
+  categories  ProductCategory[]
+  collections ProductCollection[]
+  colors      ProductColor[]
+  sizes       ProductSize[]
+  reviews     Review[]
+  orderItems  OrderItem[]
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  url       String
+  alt       String  @default("")
+  position  Int     @default(0)
+  isVideo   Boolean @default(false)
+  productId String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductVariant {
+  id             String @id @default(cuid())
+  sku            String @unique
+  price          Float
+  compareAtPrice Float?
+  stock          Int    @default(0)
+  reservedStock  Int    @default(0)
+  productId      String
+  sizeId         String?
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size    Size?   @relation(fields: [sizeId], references: [id])
+}
+
+// -- Join Tables --
+
+model ProductCategory {
+  productId  String
+  categoryId String
+
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+}
+
+model ProductCollection {
+  productId    String
+  collectionId String
+
+  product    Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+
+  @@id([productId, collectionId])
+}
+
+model ProductColor {
+  productId String
+  colorId   String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  color   Color   @relation(fields: [colorId], references: [id], onDelete: Cascade)
+
+  @@id([productId, colorId])
+}
+
+model ProductSize {
+  productId String
+  sizeId    String
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size    Size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+
+  @@id([productId, sizeId])
+}
+
+// -- Hero Banners --
+
+model HeroBanner {
+  id                 String  @id @default(cuid())
+  image              String
+  imageMobile        String?
+  title              String
+  titleAr            String
+  subtitle           String
+  subtitleAr         String
+  ctaText            String
+  ctaTextAr          String
+  ctaLink            String
+  secondaryCtaText   String?
+  secondaryCtaTextAr String?
+  secondaryCtaLink   String?
+  position           Int     @default(0)
+  isActive           Boolean @default(true)
+}
+
+// -- Guest Customers & Orders --
+
+model GuestCustomer {
+  id        String   @id @default(cuid())
+  fullName  String
+  email     String
+  phone     String
+  createdAt DateTime @default(now())
+
+  orders Order[]
+}
+
+model Order {
+  id             String   @id @default(cuid())
+  orderNumber    String   @unique
+  guestCustomerId String
+  subtotal       Float
+  discount       Float    @default(0)
+  shipping       Float    @default(0)
+  codFee         Float    @default(0)
+  vat            Float    @default(0)
+  total          Float
+  paymentMethod  String   // card | cod
+  paymentStatus  String   @default("pending") // pending | paid | failed | refunded
+  status         String   @default("pending") // pending | confirmed | processing | packed | shipped | out_for_delivery | delivered | cancelled | returned
+  couponCode     String?
+  notes          String?
+  trackingNumber String?
+
+  // Shipping Address (embedded as fields)
+  emirate     String
+  area        String
+  street      String
+  building    String
+  apartment   String @default("")
+
+  estimatedDelivery DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  guestCustomer GuestCustomer @relation(fields: [guestCustomerId], references: [id])
+  items         OrderItem[]
+  statusHistory OrderStatusEntry[]
+}
+
+model OrderItem {
+  id           String @id @default(cuid())
+  orderId      String
+  productId    String?
+  productName  String
+  productNameAr String
+  productImage String
+  sku          String
+  price        Float
+  quantity     Int
+  size         String
+  color        String
+  colorHex     String @default("#000000")
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
+
+model OrderStatusEntry {
+  id        String   @id @default(cuid())
+  orderId   String
+  status    String
+  note      String?
+  createdAt DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+// -- Reviews --
+
+model Review {
+  id                 String   @id @default(cuid())
+  productId          String
+  customerName       String
+  customerAvatar     String?
+  rating             Int
+  title              String
+  body               String
+  images             String[] @default([])
+  isVerifiedPurchase Boolean  @default(false)
+  status             String   @default("pending") // pending | approved | rejected
+  createdAt          DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+// -- Coupons --
+
+model Coupon {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  type       String   // percentage | fixed
+  value      Float
+  minOrder   Float?
+  maxDiscount Float?
+  usageLimit Int?
+  usedCount  Int      @default(0)
+  startsAt   DateTime?
+  expiresAt  DateTime?
+  isActive   Boolean  @default(true)
+}
+
+// -- Shipping Methods --
+
+model ShippingMethod {
+  id            String  @id @default(cuid())
+  name          String
+  nameAr        String
+  price         Float
+  estimatedDays Int
+  isActive      Boolean @default(true)
+}

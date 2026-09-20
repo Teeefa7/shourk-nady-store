@@ -1,0 +1,247 @@
+/* ============================================================
+   SHOURK NADY — Button Component Styles
+   ============================================================ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  border: var(--border-width) solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  letter-spacing: var(--tracking-wide);
+}
+
+[dir="rtl"] .button {
+  letter-spacing: 0;
+}
+
+/* ── Sizes ───────────────────────────────────────────────── */
+
+.sm {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-4);
+  height: 36px;
+  border-radius: var(--radius-sm);
+}
+
+.md {
+  font-size: var(--text-sm);
+  padding: var(--space-3) var(--space-6);
+  height: 44px;
+  border-radius: var(--radius-sm);
+}
+
+.lg {
+  font-size: var(--text-base);
+  padding: var(--space-4) var(--space-8);
+  height: 52px;
+  border-radius: var(--radius-sm);
+}
+
+.xl {
+  font-size: var(--text-md);
+  padding: var(--space-5) var(--space-10);
+  height: 60px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Variants ────────────────────────────────────────────── */
+
+.primary {
+  background-color: var(--color-charcoal);
+  color: var(--color-white);
+  border-color: var(--color-charcoal);
+}
+
+.primary:hover {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.secondary {
+  background-color: transparent;
+  color: var(--color-charcoal);
+  border-color: var(--color-charcoal);
+}
+
+.secondary:hover {
+  background-color: var(--color-charcoal);
+  color: var(--color-white);
+}
+
+.champagne {
+  background-color: var(--color-champagne);
+  color: var(--color-white);
+  border-color: var(--color-champagne);
+}
+
+.champagne:hover {
+  background-color: var(--color-champagne-dark);
+  border-color: var(--color-champagne-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--color-charcoal);
+  border-color: transparent;
+}
+
+.ghost:hover {
+  background-color: var(--color-cream);
+}
+
+.white {
+  background-color: var(--color-white);
+  color: var(--color-charcoal);
+  border-color: var(--color-white);
+}
+
+.white:hover {
+  background-color: var(--color-cream);
+  border-color: var(--color-cream);
+}
+
+.danger {
+  background-color: var(--color-error);
+  color: var(--color-white);
+  border-color: var(--color-error);
+}
+
+.danger:hover {
+  opacity: 0.9;
+}
+
+/* ── States ──────────────────────────────────────────────── */
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.button:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+/* ── Full Width ──────────────────────────────────────────── */
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ── Icon Only ───────────────────────────────────────────── */
+
+.iconOnly {
+  padding: 0;
+  aspect-ratio: 1;
+}
+
+.iconOnly.sm { width: 36px; }
+.iconOnly.md { width: 44px; }
+.iconOnly.lg { width: 52px; }
+
+/* ── Loading State ───────────────────────────────────────── */
+
+.loading {
+  color: transparent;
+  pointer-events: none;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  opacity: 0.7;
+}
+
+.primary .spinner::after {
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+}
+
+/* ── Ripple ──────────────────────────────────────────────── */
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 10%, transparent 10%);
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: scale(10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.8s;
+}
+
+.button:active::before {
+  transform: scale(0);
+  opacity: 1;
+  transition: 0s;
+}
+
+/* ── Editorial (text link) ───────────────────────────────── */
+
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  height: auto;
+  color: var(--color-charcoal);
+  font-weight: var(--weight-medium);
+  position: relative;
+  border-radius: 0;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  inset-inline-start: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.link:hover {
+  color: var(--color-champagne);
+  transform: none;
+  box-shadow: none;
+}

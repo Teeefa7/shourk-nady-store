@@ -1,0 +1,133 @@
+.section {
+  padding-block: var(--section-gap);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.subtitle {
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-champagne);
+  margin-bottom: var(--space-2);
+}
+
+[dir="rtl"] .subtitle {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: var(--text-sm);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  color: var(--color-black);
+  font-weight: 300;
+}
+
+[dir="rtl"] .title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: var(--text-4xl);
+  font-weight: 500;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.categoryCard {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-cream);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-6);
+  color: var(--color-ivory);
+}
+
+.cardImg {
+  object-fit: cover;
+  transition: transform var(--duration-slowest) var(--ease-out);
+}
+
+.categoryCard:hover .cardImg {
+  transform: scale(1.08);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.85) 0%, rgba(10, 10, 10, 0.1) 60%);
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.catName {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: var(--space-1);
+}
+
+[dir="rtl"] .catName {
+  font-family: 'Tajawal', sans-serif;
+  font-size: var(--text-2xl);
+  font-weight: 500;
+}
+
+.catDesc {
+  font-size: var(--text-xs);
+  color: var(--color-sand);
+  line-height: var(--leading-snug);
+  margin-bottom: var(--space-4);
+  opacity: 0.9;
+}
+
+.exploreBtn {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-champagne);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-transform);
+}
+
+[dir="rtl"] .exploreBtn {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.categoryCard:hover .exploreBtn {
+  transform: translateX(4px);
+}
+
+[dir="rtl"] .categoryCard:hover .exploreBtn {
+  transform: translateX(-4px);
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,118 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-4);
+  border-bottom: var(--border-light);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  color: var(--color-black);
+}
+
+[dir="rtl"] .title {
+  font-family: 'Tajawal', sans-serif;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  margin-bottom: var(--space-10);
+}
+
+.metricCard {
+  background-color: var(--color-cream);
+  padding: var(--space-6);
+  border-radius: var(--radius-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metricLabel {
+  font-size: var(--text-xs);
+  color: var(--color-taupe);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+[dir="rtl"] .metricLabel {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.metricValue {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-black);
+}
+
+.metricChange {
+  font-size: var(--text-xs);
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.sectionBlock {
+  margin-bottom: var(--space-12);
+}
+
+.blockHeader {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  color: var(--color-black);
+  margin-bottom: var(--space-4);
+}
+
+[dir="rtl"] .blockHeader {
+  font-family: 'Tajawal', sans-serif;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--brand-surface);
+  border: 1px solid var(--color-sand);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  font-size: var(--text-xs);
+}
+
+.table th, .table td {
+  padding: 14px;
+  text-align: start;
+  border-bottom: 1px solid var(--color-cream);
+}
+
+.table th {
+  background-color: var(--color-cream);
+  font-weight: var(--weight-bold);
+  color: var(--color-black);
+}
+
+.statusBadge {
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+.statusOutForDelivery {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+.statusDelivered {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+@media (max-width: 1023px) {
+  .metricsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

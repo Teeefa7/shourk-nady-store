@@ -1,69 +1,144 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { HeroSlider } from '@/components/home/HeroSlider';
+import { CategoryGrid } from '@/components/home/CategoryGrid';
+import { CraftsmanshipSection } from '@/components/home/CraftsmanshipSection';
+import { ProductCard } from '@/components/product/ProductCard';
+import { QuickViewModal } from '@/components/product/QuickViewModal';
+import { SizeGuideModal } from '@/components/product/SizeGuideModal';
+import {
+  INITIAL_HERO_BANNERS,
+  INITIAL_CATEGORIES,
+  INITIAL_PRODUCTS,
+} from '@/data/products';
+import { Product } from '@/types';
+import { useLanguage } from '@/context/LanguageContext';
+import styles from './page.module.css';
 
 export default function Home() {
+  const { locale } = useLanguage();
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+
+  const newArrivals = INITIAL_PRODUCTS.filter((p) => p.isNewArrival);
+  const bestSellers = INITIAL_PRODUCTS.filter((p) => p.isBestSeller);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+    <>
+      {/* Editorial Parallax Hero */}
+      <HeroSlider banners={INITIAL_HERO_BANNERS} />
+
+      {/* Featured Categories Grid */}
+      <CategoryGrid categories={INITIAL_CATEGORIES} />
+
+      {/* New Arrivals Section */}
+      <section className="section container">
+        <span className={styles.sectionSubtitle}>
+          {locale === 'ar' ? 'تشكيلة الموسم الجديدة' : 'NEW SEASON ARRIVALS'}
+        </span>
+        <h2 className={styles.sectionTitle}>
+          {locale === 'ar' ? 'أحدث العبايات والقفاطين' : 'Curated New Arrivals'}
+        </h2>
+
+        <div className={styles.productGrid}>
+          {newArrivals.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onQuickView={(p) => setQuickViewProduct(p)}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
-    </div>
+
+        <div style={{ textAlign: 'center', marginTop: 'var(--space-10)' }}>
+          <Link
+            href="/products"
+            style={{
+              display: 'inline-block',
+              padding: '14px 32px',
+              border: '1px solid var(--color-black)',
+              fontSize: 'var(--text-xs)',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              borderRadius: 'var(--radius-xs)',
+              fontWeight: 600,
+            }}
+          >
+            {locale === 'ar' ? 'مشاهدة كل التشكيلة' : 'View All Collections'}
+          </Link>
+        </div>
+      </section>
+
+      {/* Emirati Atelier Craftsmanship */}
+      <CraftsmanshipSection />
+
+      {/* Best Sellers Section */}
+      <section className="section container">
+        <span className={styles.sectionSubtitle}>
+          {locale === 'ar' ? 'الأعلى طلباً في الإمارات' : 'EMIRATI FAVORITES'}
+        </span>
+        <h2 className={styles.sectionTitle}>
+          {locale === 'ar' ? 'العبايات الأكثر مبيعاً' : 'Best Selling Abayas'}
+        </h2>
+
+        <div className={styles.productGrid}>
+          {bestSellers.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onQuickView={(p) => setQuickViewProduct(p)}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Ramadan Royal Promo Banner */}
+      <section className={styles.bannerSection}>
+        <div className={`container ${styles.bannerContent}`}>
+          <span style={{ fontSize: 'var(--text-xs)', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-champagne-dark)' }}>
+            {locale === 'ar' ? 'مجموعة رمضان ٢٠٢٦' : 'RAMADAN ROYAL COLLECTION 2026'}
+          </span>
+          <h2 className={styles.bannerHeading}>
+            {locale === 'ar'
+              ? 'تأنقي في رمضان بأحدث قفاطين الحرير وعبايات السهرة'
+              : 'Elegance for Holy Month Galas & Family Gatherings'}
+          </h2>
+          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-charcoal)', maxWidth: '560px' }}>
+            {locale === 'ar'
+              ? 'استمتعي بشحن مجاني وتوصيل سريع في نفس اليوم لجميع إمارات الدولة.'
+              : 'Enjoy complimentary express shipping across Abu Dhabi, Dubai, Sharjah, and all UAE emirates.'}
+          </p>
+          <Link
+            href="/collection/ramadan-2026"
+            style={{
+              padding: '14px 36px',
+              backgroundColor: 'var(--color-black)',
+              color: 'var(--color-ivory)',
+              fontSize: 'var(--text-xs)',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              borderRadius: 'var(--radius-xs)',
+              marginTop: '12px',
+            }}
+          >
+            {locale === 'ar' ? 'استكشفي مجموعة رمضان' : 'Shop Ramadan Edition'}
+          </Link>
+        </div>
+      </section>
+
+      {/* Modals */}
+      <QuickViewModal
+        product={quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+        onOpenSizeGuide={() => setIsSizeGuideOpen(true)}
+      />
+
+      <SizeGuideModal
+        isOpen={isSizeGuideOpen}
+        onClose={() => setIsSizeGuideOpen(false)}
+      />
+    </>
   );
 }
