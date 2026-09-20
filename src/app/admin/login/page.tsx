@@ -25,8 +25,7 @@ export default function AdminLoginPage() {
       const res = await adminLoginAction({ identifier, password });
 
       if (res.success) {
-        router.push('/admin');
-        router.refresh();
+        window.location.href = '/admin';
       } else {
         setErrorMessage(res.error || 'Authentication failed. Please check credentials.');
       }

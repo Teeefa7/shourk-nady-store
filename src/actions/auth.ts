@@ -37,13 +37,13 @@ export async function adminLoginAction(formData: {
       return { success: false, error: 'Invalid username or password.' };
     }
 
-    // Compare entered password with env password or hash
+    // Compare password (with bcrypt comparison fallback)
     let isValidPassword = false;
     if (process.env.ADMIN_PASSWORD_HASH) {
-      isValidPassword = await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH);
+      isValidPassword = await bcrypt.compare(password.trim(), process.env.ADMIN_PASSWORD_HASH);
     } else {
-      // Direct comparison with env/default password & generate hash for verification
-      isValidPassword = password === envPassword;
+      const defaultPassword = process.env.ADMIN_PASSWORD || 'ShourkAtelier2026!';
+      isValidPassword = password.trim() === defaultPassword;
     }
 
     if (!isValidPassword) {
@@ -52,7 +52,7 @@ export async function adminLoginAction(formData: {
 
     // Set secure HTTP-only auth cookie
     const cookieStore = await cookies();
-    const sessionToken = Buffer.from(`sn_admin_${Date.now()}_${Math.random()}`).toString('base64');
+    const sessionToken = `sn_admin_${Date.now()}_${Math.random().toString(36).substring(2)}`;
 
     cookieStore.set(ADMIN_COOKIE_NAME, sessionToken, {
       httpOnly: true,

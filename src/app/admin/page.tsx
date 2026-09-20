@@ -102,7 +102,7 @@ export default function AdminDashboardPage() {
 
   const handleLogout = async () => {
     await adminLogoutAction();
-    router.push('/admin/login');
+    window.location.href = '/admin/login';
   };
 
   const handleOpenAddModal = () => {
