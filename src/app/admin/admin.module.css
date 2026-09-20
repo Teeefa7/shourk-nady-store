@@ -4,6 +4,8 @@
   color: #fdfbf7;
   display: flex;
   font-family: var(--font-sans, system-ui, sans-serif);
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Sidebar Styling */
@@ -18,6 +20,7 @@
   top: 0;
   height: 100vh;
   z-index: 50;
+  flex-shrink: 0;
 }
 
 .brandEmblem {
@@ -129,6 +132,8 @@
   padding: 32px 40px;
   overflow-y: auto;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .header {
@@ -255,23 +260,15 @@
   transform: translateY(-1px);
 }
 
-/* Responsive Table Wrapper */
-.tableContainer {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin-bottom: 8px;
-}
-
-/* Tables */
-.table {
+/* Desktop Table View */
+.desktopTable {
+  display: table;
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  min-width: 600px;
 }
 
-.table th {
+.desktopTable th {
   padding: 12px 14px;
   font-size: 11px;
   text-transform: uppercase;
@@ -282,14 +279,14 @@
   white-space: nowrap;
 }
 
-.table td {
+.desktopTable td {
   padding: 14px;
   font-size: 13px;
   color: #e0e0e0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.table tr:hover td {
+.desktopTable tr:hover td {
   background: rgba(255, 255, 255, 0.02);
 }
 
@@ -335,54 +332,74 @@
   background: rgba(211, 47, 47, 0.25);
 }
 
-/* Mobile Product Card List (Hidden on desktop) */
+/* Mobile Card View (Shows on phones) */
 .mobileCardList {
   display: none;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  width: 100%;
 }
 
-.mobileProductCard {
+.mobileCard {
   background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 14px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.mobileCardHeader {
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-.mobileProductInfo {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.mobileProductTitle {
-  font-weight: 600;
-  font-size: 14px;
-  color: #fff;
-}
-
-.mobileProductMeta {
-  font-size: 12px;
-  color: #d4af37;
-  display: flex;
-  gap: 8px;
-}
-
-.mobileProductActions {
+.mobileCardBody {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.mobileCardTitle {
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+}
+
+.mobileCardSub {
+  font-size: 12px;
+  color: #a09587;
+}
+
+.mobileCardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+}
+
+.mobileCardActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.mobileCardActions button {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
 }
 
 /* ============================================================
    RESPONSIVE MEDIA QUERIES FOR PHONES & TABLETS
    ============================================================ */
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .adminWrapper {
     flex-direction: column;
   }
@@ -392,15 +409,15 @@
     height: auto;
     position: sticky;
     top: 0;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-right: none;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    background: #121212;
   }
 
   .brandEmblem {
-    margin-bottom: 12px;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
     justify-content: space-between;
   }
 
@@ -425,7 +442,7 @@
   }
 
   .mainContent {
-    padding: 16px;
+    padding: 16px 12px;
   }
 
   .header {
@@ -448,7 +465,7 @@
   }
 
   .metricValue {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .sectionBlock {
@@ -456,9 +473,9 @@
     border-radius: 8px;
   }
 
-  /* Show mobile card view on small screens */
-  .tableContainer {
-    display: block;
+  /* Hide table on phones, show clean mobile cards */
+  .desktopTable {
+    display: none;
   }
 
   .mobileCardList {
