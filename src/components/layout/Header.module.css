@@ -1,34 +1,118 @@
-.announcementBar {
-  background-color: var(--color-black);
-  color: var(--color-sand);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  padding: 6px var(--container-padding);
-  text-align: center;
+/* ============================================================
+   SHOURKÉ — Header Styles
+   ============================================================ */
+
+/* ── Countdown Announcement Bar ───────────────────────────── */
+.countdownBar {
   position: relative;
-  z-index: var(--z-sticky);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-[dir="rtl"] .announcementBar {
-  letter-spacing: 0;
-  font-size: 0.75rem;
-}
-
-.announcementContent {
+  background: #e8000a;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-4);
+  padding: 10px 40px 10px 16px;
+  z-index: var(--z-sticky);
+  text-align: center;
 }
 
+.countdownInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.saleTitle {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.saleSubtitle {
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+  line-height: 1;
+}
+
+.countdownDigits {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.digitBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 30px;
+}
+
+.digit {
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.digitLabel {
+  font-size: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  margin-top: 1px;
+}
+
+.colon {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.closeBar {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.85);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+}
+
+.closeBar:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* RTL close button position */
+[dir="rtl"] .closeBar {
+  right: auto;
+  left: 12px;
+}
+
+/* ── Main Header ───────────────────────────────────────────── */
 .header {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background-color: rgba(253, 250, 246, 0.96);
+  background-color: rgba(253, 250, 246, 0.97);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(212, 197, 181, 0.25);
@@ -39,54 +123,31 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--header-height);
+  height: var(--header-height, 105px);
 }
 
+/* ── Left Nav ──────────────────────────────────────────────── */
 .leftNav {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: 4px;
   flex: 1;
-}
-
-.menuButton {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-sm);
-  color: var(--color-charcoal);
-  padding: var(--space-2);
-  border-radius: var(--radius-sm);
-  border: none;
-  outline: none;
-  background: transparent;
-  transition: var(--transition-colors);
-}
-
-.menuButton:hover {
-  color: var(--color-champagne);
 }
 
 .navLinks {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-6, 24px);
 }
 
 .navLink {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.05em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-charcoal);
+  color: var(--color-charcoal, #3a3028);
   position: relative;
-  padding: var(--space-2) 0;
-}
-
-[dir="rtl"] .navLink {
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: var(--text-base);
+  padding: 4px 0;
 }
 
 .navLink::after {
@@ -96,20 +157,32 @@
   left: 0;
   width: 0;
   height: 1.5px;
-  background-color: var(--color-champagne);
-  transition: width var(--duration-normal) var(--ease-out);
+  background-color: var(--color-champagne, #c9a84c);
+  transition: width 0.25s ease;
 }
 
-[dir="rtl"] .navLink::after {
-  left: auto;
-  right: 0;
+[dir="rtl"] .navLink::after { left: auto; right: 0; }
+
+.navLink:hover::after { width: 100%; }
+
+.navLinkSale {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  padding: 4px 0;
+  position: relative;
 }
 
-.navLink:hover::after,
-.navLinkActive::after {
-  width: 100%;
+[dir="rtl"] .navLink,
+[dir="rtl"] .navLinkSale {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: var(--text-base, 0.9rem);
 }
 
+/* ── Brand Logo: Stacked Layout ────────────────────────────── */
 .brandLogo {
   text-align: center;
   flex: 1;
@@ -117,135 +190,188 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2px;
+  padding: 4px 0;
+  text-decoration: none;
 }
 
+.emblemWrapper {
+  width: 90px;
+  height: 85px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  mix-blend-mode: multiply;
+}
+
+/* Hexagon emblem — cropped and bigger size */
+.logoEmblem {
+  width: 100%;
+  height: 135%;
+  object-fit: cover;
+  object-position: top center;
+  flex-shrink: 0;
+}
+
+/* SHROUKÉ — small font title under big emblem */
 .logoTitle {
-  font-family: var(--font-heading);
-  font-size: var(--text-lg);
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--color-black);
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: #1a1a1a;
   text-transform: uppercase;
-  line-height: 1.1;
+  line-height: 1;
   white-space: nowrap;
+  margin-top: 1px;
 }
 
 [dir="rtl"] .logoTitle {
-  font-family: 'Tajawal', sans-serif;
-  letter-spacing: 0;
-  font-size: 1.35rem;
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+  letter-spacing: 0.08em;
+  font-size: 0.88rem;
   font-weight: 700;
-  white-space: nowrap;
 }
 
-.logoSubtitle {
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  color: var(--color-champagne-dark);
-  text-transform: uppercase;
-  margin-top: 2px;
-  white-space: nowrap;
-}
-
-[dir="rtl"] .logoSubtitle {
-  letter-spacing: 0.05em;
-  font-size: 0.7rem;
-}
-
+/* ── Right Nav ─────────────────────────────────────────────── */
 .rightNav {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-2);
+  gap: 4px;
   flex: 1;
 }
 
+/* ── Shared Icon Button ────────────────────────────────────── */
 .iconButton {
   position: relative;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-full);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full, 9999px);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-charcoal);
+  color: var(--color-charcoal, #3a3028);
   border: none;
   outline: none;
   background: transparent;
-  transition: var(--transition-colors);
+  transition: background 0.18s ease, color 0.18s ease;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .iconButton:hover {
-  background-color: var(--color-cream);
-  color: var(--color-champagne-dark);
+  background-color: var(--color-cream, #f5f0e8);
+  color: #1a1a1a;
 }
 
 .badge {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  background-color: var(--color-champagne-dark);
-  color: var(--color-white);
-  font-size: 0.6rem;
-  font-weight: var(--weight-bold);
+  top: 4px;
+  right: 4px;
+  background-color: #e8000a;
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 700;
   min-width: 16px;
   height: 16px;
-  border-radius: var(--radius-full);
+  border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;
+  padding: 0 3px;
+  line-height: 1;
 }
 
-[dir="rtl"] .badge {
-  right: auto;
-  left: 2px;
-}
+[dir="rtl"] .badge { right: auto; left: 4px; }
 
+/* Language toggle */
 .langBtn {
-  font-size: 0.7rem;
-  font-weight: var(--weight-semibold);
+  font-size: 0.68rem;
+  font-weight: 600;
   letter-spacing: 0.05em;
   padding: 4px 10px;
-  background-color: var(--color-cream);
+  background-color: var(--color-cream, #f5f0e8);
   border: none;
-  outline: none;
-  border-radius: var(--radius-full);
-  color: var(--color-black);
-  transition: var(--transition-colors);
+  border-radius: 9999px;
+  color: var(--color-black, #1a1a1a);
+  transition: background 0.18s ease;
+  cursor: pointer;
   white-space: nowrap;
 }
 
 .langBtn:hover {
-  background-color: var(--color-champagne);
-  color: var(--color-black);
+  background-color: var(--color-champagne, #c9a84c);
+  color: #fff;
 }
 
+/* menuButton kept for any legacy references */
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  color: var(--color-charcoal, #3a3028);
+  transition: background 0.18s ease;
+}
+.menuButton:hover { background: var(--color-cream, #f5f0e8); }
+
+/* ── Responsive ────────────────────────────────────────────── */
+
 @media (max-width: 1023px) {
-  .navLinks {
-    display: none;
-  }
+  .navLinks { display: none; }
 }
 
 @media (max-width: 767px) {
   .headerContainer {
+    height: 75px;
+  }
+  
+  .emblemWrapper {
+    width: 60px;
     height: 56px;
   }
-  .logoSubtitle {
-    display: none;
-  }
+
+  /* Remove .logoEmblem override to keep crop active */
+
   .logoTitle {
-    font-size: 0.95rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
   }
+
   [dir="rtl"] .logoTitle {
-    font-size: 1.15rem;
+    font-size: 0.75rem;
   }
+
   .iconButton {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
+
   .langBtn {
     padding: 3px 8px;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
   }
+
+  /* Countdown bar compact on mobile */
+  .digit {
+    font-size: 1.1rem;
+  }
+
+  .saleTitle {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .emblemWrapper { width: 50px; height: 48px; }
+  .logoTitle { font-size: 0.75rem; letter-spacing: 0.18em; }
+  .digitBlock { min-width: 24px; }
+  .digit { font-size: 0.95rem; }
 }

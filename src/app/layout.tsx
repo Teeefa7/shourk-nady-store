@@ -3,12 +3,12 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  title: 'شروق نادي | Shourk Nady — Luxury Abayas & Modest Fashion UAE',
+  title: 'SHROUKÉ — Luxury Abayas & Modest Fashion',
   description: 'Emirati luxury atelier crafting bespoke Japanese Silk Nida abayas, silk kaftans, and modest fashion couture in the United Arab Emirates.',
-  keywords: ['Luxury Abaya UAE', 'Dubai Abayas', 'Japanese Nida Abaya', 'Silk Kaftan', 'عبايات دبي', 'عبايات سوداء فاخرة', 'قفطان حرير'],
+  keywords: ['SHROUKÉ', 'Luxury Abaya UAE', 'Dubai Abayas', 'Japanese Nida Abaya', 'Silk Kaftan', 'عبايات دبي', 'عبايات سوداء فاخرة', 'قفطان حرير'],
   icons: {
-    icon: '/icon.svg',
-    apple: '/apple-icon.svg',
+    icon: '/images/shrouke-logo.jpg',
+    apple: '/images/shrouke-logo.jpg',
   },
 };
 

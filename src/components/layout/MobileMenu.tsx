@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './MobileMenu.module.css';
 
@@ -20,9 +21,19 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
       <div className={styles.overlay} onClick={onClose} />
       <div className={styles.drawer}>
         <div className={styles.header}>
-          <span className={styles.brand}>
-            {locale === 'ar' ? 'شروق نادي' : 'SHOURK NADY'}
-          </span>
+          <Link href="/" className={styles.brandStacked} onClick={onClose}>
+            <div className={styles.emblemWrapper}>
+              <Image
+                src="/images/shrouke-logo.jpg"
+                alt="SHROUKÉ Emblem"
+                width={85}
+                height={110}
+                className={styles.logoEmblem}
+                priority
+              />
+            </div>
+            <span className={styles.brandTitle}>SHROUKÉ</span>
+          </Link>
           <button className={styles.closeBtn} onClick={onClose} aria-label="Close menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <line x1="18" y1="6" x2="6" y2="18" />
