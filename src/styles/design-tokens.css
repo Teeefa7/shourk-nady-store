@@ -184,8 +184,8 @@
   --focus-ring-dark: 0 0 0 2px var(--color-charcoal), 0 0 0 4px var(--color-champagne);
 
   /* -- Misc ------------------------------------------------ */
-  --header-height: 72px;
-  --header-height-mobile: 60px;
+  --header-height: 110px;
+  --header-height-mobile: 75px;
   --mobile-nav-height: 64px;
   --sidebar-width: 280px;
   --drawer-width: 420px;

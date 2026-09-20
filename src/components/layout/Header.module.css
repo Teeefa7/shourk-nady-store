@@ -330,7 +330,7 @@
 
 @media (max-width: 767px) {
   .headerContainer {
-    height: 75px;
+    height: var(--header-height-mobile, 75px);
   }
   
   .emblemWrapper {
