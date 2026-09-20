@@ -371,31 +371,57 @@ export default function AdminDashboardPage() {
                 </button>
               </div>
 
-              <div className={styles.tableContainer}>
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>Order Number</th>
-                      <th>Customer</th>
-                      <th>Emirate</th>
-                      <th>Total</th>
-                      <th>Status</th>
+              {/* Desktop Table View */}
+              <table className={styles.desktopTable}>
+                <thead>
+                  <tr>
+                    <th>Order Number</th>
+                    <th>Customer</th>
+                    <th>Emirate</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.slice(0, 5).map((ord, idx) => (
+                    <tr key={ord.id || idx}>
+                      <td><strong>#{ord.orderNumber || ord.id}</strong></td>
+                      <td>{ord.guestCustomer?.fullName || ord.customer || 'Guest Customer'}</td>
+                      <td>{ord.emirate || 'Dubai'}</td>
+                      <td>{formatCurrency(ord.total || ord.price || 1850, locale)}</td>
+                      <td>
+                        <span style={{ color: '#d4af37', fontWeight: 600 }}>{ord.status || 'Confirmed'}</span>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {orders.slice(0, 5).map((ord, idx) => (
-                      <tr key={ord.id || idx}>
-                        <td><strong>#{ord.orderNumber || ord.id}</strong></td>
-                        <td>{ord.guestCustomer?.fullName || ord.customer || 'Guest Customer'}</td>
-                        <td>{ord.emirate || 'Dubai'}</td>
-                        <td>{formatCurrency(ord.total || ord.price || 1850, locale)}</td>
-                        <td>
-                          <span style={{ color: '#d4af37', fontWeight: 600 }}>{ord.status || 'Confirmed'}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                  ))}
+                </tbody>
+              </table>
+
+              {/* Mobile Card Grid View */}
+              <div className={styles.mobileCardList}>
+                {orders.slice(0, 5).map((ord, idx) => (
+                  <div key={ord.id || idx} className={styles.mobileCard}>
+                    <div className={styles.mobileCardHeader} style={{ justifyContent: 'space-between' }}>
+                      <div style={{ fontWeight: 'bold', color: '#d4af37' }}>
+                        #{ord.orderNumber || ord.id}
+                      </div>
+                      <span style={{ fontSize: '11px', color: '#81c784', fontWeight: 600, padding: '3px 8px', background: 'rgba(76, 175, 80, 0.15)', borderRadius: '12px' }}>
+                        {(ord.status || 'Confirmed').replace(/_/g, ' ').toUpperCase()}
+                      </span>
+                    </div>
+                    <div className={styles.mobileCardBody}>
+                      <div style={{ fontWeight: 600, color: '#fff', fontSize: '14px' }}>
+                        👤 {ord.guestCustomer?.fullName || ord.customer || 'Guest Customer'}
+                      </div>
+                      <div className={styles.mobileCardRow}>
+                        <span style={{ color: '#a09587' }}>📍 {ord.emirate || 'Dubai'}</span>
+                        <span style={{ fontWeight: 'bold', color: '#fff', fontSize: '14px' }}>
+                          {formatCurrency(ord.total || ord.price || 1850, locale)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </>
